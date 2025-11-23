@@ -3,64 +3,68 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>CalcPlay</title>
+  <title>CalcPro</title>
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- Google Fonts - Playful yet Professional -->
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Google Fonts - Modern & Clean -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      /* Light theme - Modern Playful */
-      --bg: #ffffff;
-      --display-bg: #f8fafc;
-      --surface: #ffffff;
-      --text-primary: #1a1a1a;
-      --text-secondary: #666666;
-      --border: #e5e5e5;
-      --shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-      --shadow-soft: 0 2px 12px rgba(0, 0, 0, 0.04);
+      /* Light theme - Modern & Clean */
+      --bg: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+      --display-bg: rgba(255, 255, 255, 0.95);
+      --surface: rgba(255, 255, 255, 0.98);
+      --text-primary: #1e293b;
+      --text-secondary: #64748b;
+      --border: rgba(226, 232, 240, 0.8);
+      --shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+      --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.04);
+      --shadow-button: 0 4px 12px rgba(0, 0, 0, 0.08);
       
-      --button-bg: #ffffff;
-      --button-hover: #f8f9fa;
-      --button-active: #f1f3f4;
+      --button-bg: rgba(255, 255, 255, 0.9);
+      --button-hover: rgba(248, 250, 252, 0.9);
+      --button-active: rgba(241, 245, 249, 0.9);
       
-      --operator-bg: #f1f3f4;
-      --operator-text: #1a1a1a;
-      --operator-hover: #e8eaed;
+      --operator-bg: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+      --operator-text: #ffffff;
+      --operator-hover: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
       
-      --equals-bg: #6366f1;
+      --equals-bg: linear-gradient(135deg, #10b981 0%, #059669 100%);
       --equals-text: #ffffff;
-      --equals-hover: #4f46e5;
+      --equals-hover: linear-gradient(135deg, #059669 0%, #047857 100%);
       
       --clear-color: #ef4444;
       --accent-color: #6366f1;
+      --accent-glow: rgba(99, 102, 241, 0.15);
       
-      --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-smooth: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     [data-theme="dark"] {
-      /* Dark theme - Modern Playful Dark */
-      --bg: #0f0f0f;
-      --display-bg: #1a1a1a;
-      --surface: #1a1a1a;
-      --text-primary: #ffffff;
-      --text-secondary: #a0a0a0;
-      --border: #333333;
+      /* Dark theme - Premium Dark */
+      --bg: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      --display-bg: rgba(30, 41, 59, 0.95);
+      --surface: rgba(30, 41, 59, 0.98);
+      --text-primary: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --border: rgba(51, 65, 85, 0.6);
       
-      --button-bg: #2a2a2a;
-      --button-hover: #363636;
-      --button-active: #404040;
+      --button-bg: rgba(30, 41, 59, 0.9);
+      --button-hover: rgba(41, 55, 77, 0.9);
+      --button-active: rgba(51, 65, 85, 0.9);
       
-      --operator-bg: #333333;
-      --operator-text: #ffffff;
-      --operator-hover: #404040;
+      --operator-bg: linear-gradient(135deg, #818cf8 0%, #a78bfa 100%);
+      --operator-text: #1e293b;
+      --operator-hover: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
       
-      --equals-bg: #818cf8;
-      --equals-text: #ffffff;
-      --equals-hover: #6366f1;
+      --equals-bg: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+      --equals-text: #1e293b;
+      --equals-hover: linear-gradient(135deg, #10b981 0%, #059669 100%);
       
       --clear-color: #f87171;
       --accent-color: #818cf8;
+      --accent-glow: rgba(129, 140, 248, 0.2);
     }
 
     * {
@@ -78,25 +82,25 @@
 
     body {
       color: var(--text-primary);
-      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, Roboto, sans-serif;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, Roboto, sans-serif;
       display: flex;
       flex-direction: column;
-      transition: var(--transition);
+      transition: var(--transition-smooth);
       font-weight: 500;
+      backdrop-filter: blur(20px);
     }
 
     .header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 24px 24px 20px;
+      padding: 28px 28px 20px;
       flex-shrink: 0;
-      background: var(--bg);
-      border-bottom: 1px solid var(--border);
+      background: transparent;
     }
 
     .app-title {
-      font-size: 24px;
+      font-size: 26px;
       font-weight: 800;
       color: var(--text-primary);
       letter-spacing: -0.5px;
@@ -104,13 +108,25 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
+      position: relative;
+    }
+
+    .app-title::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 30px;
+      height: 3px;
+      background: linear-gradient(135deg, var(--accent-color), #a855f7);
+      border-radius: 2px;
     }
 
     .theme-toggle {
       background: var(--button-bg);
       border: 1.5px solid var(--border);
-      width: 48px;
-      height: 48px;
+      width: 52px;
+      height: 52px;
       border-radius: 16px;
       display: flex;
       align-items: center;
@@ -119,12 +135,29 @@
       color: var(--text-primary);
       transition: var(--transition);
       font-size: 20px;
+      backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .theme-toggle::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: var(--accent-glow);
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .theme-toggle:hover::before {
+      opacity: 1;
     }
 
     .theme-toggle:active {
       transform: scale(0.92);
-      background: var(--button-active);
-      border-color: var(--accent-color);
     }
 
     .display-section {
@@ -133,10 +166,28 @@
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      padding: 32px 24px;
+      padding: 32px 28px;
       overflow: hidden;
       min-height: 0;
       position: relative;
+      margin: 0 20px 20px;
+      border-radius: 24px;
+      backdrop-filter: blur(20px);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+    }
+
+    .display-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, var(--accent-glow), transparent);
+      opacity: 0.3;
+      border-radius: 24px;
+      pointer-events: none;
     }
 
     .history {
@@ -149,7 +200,7 @@
       text-overflow: ellipsis;
       white-space: nowrap;
       transition: var(--transition);
-      font-weight: 600;
+      font-weight: 500;
       opacity: 0.9;
       letter-spacing: -0.2px;
     }
@@ -161,20 +212,22 @@
     }
 
     .result {
-      font-size: clamp(56px, 14vw, 72px);
-      font-weight: 700;
+      font-size: clamp(60px, 15vw, 80px);
+      font-weight: 300;
       text-align: right;
       line-height: 1.1;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: var(--transition-smooth);
       letter-spacing: -2px;
       will-change: transform;
       transform-origin: right center;
       display: inline-block;
       max-width: 100%;
-      direction: ltr; /* Ensure proper text direction */
+      direction: ltr;
+      font-feature-settings: "tnum";
+      font-variant-numeric: tabular-nums;
     }
 
     /* Fix for negative numbers - proper alignment */
@@ -184,22 +237,20 @@
     }
 
     .keypad-section {
-      height: 58vh;
-      max-height: 420px;
-      min-height: 360px;
-      background: var(--surface);
+      height: 55vh;
+      max-height: 440px;
+      min-height: 380px;
+      background: transparent;
       display: flex;
       flex-direction: column;
-      padding: 24px;
-      border-top: 1px solid var(--border);
-      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.03);
+      padding: 0 28px 28px;
     }
 
     .keypad {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       grid-template-rows: repeat(5, 1fr);
-      gap: 14px;
+      gap: 16px;
       height: 100%;
       width: 100%;
     }
@@ -219,8 +270,10 @@
       user-select: none;
       position: relative;
       overflow: hidden;
-      box-shadow: var(--shadow-soft);
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      box-shadow: var(--shadow-button);
+      font-family: 'Inter', sans-serif;
+      backdrop-filter: blur(10px);
+      border: 1px solid var(--border);
     }
 
     .btn::before {
@@ -233,52 +286,76 @@
       background: currentColor;
       opacity: 0;
       transition: opacity 0.2s ease;
+      border-radius: 20px;
+    }
+
+    .btn::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      border-radius: 20px;
     }
 
     .btn:active::before {
       opacity: 0.1;
     }
 
+    .btn:active::after {
+      opacity: 1;
+    }
+
     .btn:active {
       transform: scale(0.94);
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
 
     .btn.operator {
       background: var(--operator-bg);
       color: var(--operator-text);
-      font-weight: 700;
+      font-weight: 600;
       font-size: 24px;
+      border: none;
+      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.3);
     }
 
     .btn.operator:active {
       background: var(--operator-hover);
+      box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
     }
 
     .btn.equals {
       background: var(--equals-bg);
       color: var(--equals-text);
-      font-weight: 700;
+      font-weight: 600;
       font-size: 26px;
+      border: none;
+      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3);
     }
 
     .btn.equals:active {
       background: var(--equals-hover);
+      box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
     }
 
     .btn.clear {
       color: var(--clear-color);
-      font-weight: 700;
+      font-weight: 600;
     }
 
     .btn.number {
-      font-weight: 600;
+      font-weight: 500;
       font-size: 26px;
     }
 
     .btn i {
       font-size: 22px;
-      font-weight: 600;
+      font-weight: 500;
     }
 
     /* Enhanced number transitions */
@@ -286,16 +363,55 @@
       transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
+    /* Micro-interactions */
+    .btn-press {
+      animation: btnPress 0.3s ease;
+    }
+
+    @keyframes btnPress {
+      0% { transform: scale(1); }
+      50% { transform: scale(0.94); }
+      100% { transform: scale(1); }
+    }
+
+    /* Glow effect for important buttons */
+    .btn-glow {
+      position: relative;
+    }
+
+    .btn-glow::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: var(--operator-bg);
+      border-radius: 22px;
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .btn-glow:hover::before {
+      opacity: 0.3;
+    }
+
     /* Haptic feedback simulation */
     @media (hover: hover) {
       .btn:hover {
         transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+      }
+      
+      .btn.operator:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
       }
       
       .btn.equals:hover {
         transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+        box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
       }
     }
 
@@ -308,12 +424,13 @@
     /* Responsive adjustments */
     @media (max-height: 700px) {
       .keypad-section {
-        height: 52vh;
-        padding: 20px;
+        height: 50vh;
+        padding: 0 24px 24px;
       }
       
       .display-section {
-        padding: 24px 20px;
+        padding: 28px 24px;
+        margin: 0 16px 16px;
       }
       
       .btn {
@@ -322,7 +439,7 @@
       }
       
       .result {
-        font-size: clamp(48px, 12vw, 60px);
+        font-size: clamp(52px, 13vw, 68px);
       }
       
       .history {
@@ -333,16 +450,17 @@
 
     @media (max-width: 350px) {
       .header {
-        padding: 20px 20px 16px;
+        padding: 24px 24px 16px;
       }
       
       .display-section {
-        padding: 20px;
+        padding: 24px;
+        margin: 0 12px 12px;
       }
       
       .keypad-section {
-        padding: 20px;
-        gap: 12px;
+        padding: 0 24px 24px;
+        gap: 14px;
       }
       
       .btn {
@@ -351,7 +469,7 @@
       }
       
       .result {
-        font-size: clamp(42px, 11vw, 52px);
+        font-size: clamp(46px, 12vw, 58px);
       }
       
       .history {
@@ -359,51 +477,68 @@
       }
       
       .app-title {
-        font-size: 22px;
+        font-size: 24px;
       }
     }
 
     /* Safe area support */
     @supports(padding: max(0px)) {
       .header, .display-section, .keypad-section {
-        padding-left: max(24px, env(safe-area-inset-left));
-        padding-right: max(24px, env(safe-area-inset-right));
+        padding-left: max(28px, env(safe-area-inset-left));
+        padding-right: max(28px, env(safe-area-inset-right));
       }
       
       .keypad-section {
-        padding-bottom: max(24px, env(safe-area-inset-bottom));
+        padding-bottom: max(28px, env(safe-area-inset-bottom));
       }
     }
 
     /* Loading animation */
     @keyframes subtleGlow {
       0%, 100% { opacity: 1; }
-      50% { opacity: 0.95; }
+      50% { opacity: 0.8; }
     }
 
     .calculating {
       animation: subtleGlow 1s ease-in-out infinite;
     }
 
+    /* Success animation */
+    @keyframes successPulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+      100% { transform: scale(1); }
+    }
+
+    .success {
+      animation: successPulse 0.6s ease;
+    }
+
     /* Icon fallback */
     .icon-fallback {
-      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-family: 'Inter', sans-serif;
       font-weight: 700;
     }
 
     /* Fix for long numbers */
     .result-long {
-      font-size: clamp(42px, 10vw, 56px);
+      font-size: clamp(48px, 11vw, 64px);
     }
 
     .result-very-long {
-      font-size: clamp(36px, 8vw, 48px);
+      font-size: clamp(42px, 9vw, 56px);
+    }
+
+    /* Visual feedback for operations */
+    .operation-active {
+      background: var(--accent-glow) !important;
+      color: var(--accent-color) !important;
     }
   </style>
 </head>
 <body>
   <div class="header">
-    <div class="app-title">CalcPlay</div>
+    <div class="app-title">CalcPro</div>
     <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
       <i class="fas fa-moon"></i>
     </button>
@@ -419,16 +554,16 @@
   <div class="keypad-section">
     <div class="keypad">
       <!-- Row 1 -->
-      <button class="btn clear" data-action="clear" aria-label="Clear">
+      <button class="btn clear btn-glow" data-action="clear" aria-label="Clear">
         <i class="fas fa-undo-alt"></i>
       </button>
-      <button class="btn operator" data-action="toggleSign" aria-label="Toggle sign">
+      <button class="btn operator btn-glow" data-action="toggleSign" aria-label="Toggle sign">
         <i class="fas fa-plus-minus"></i>
       </button>
-      <button class="btn operator" data-action="percent" aria-label="Percentage">
+      <button class="btn operator btn-glow" data-action="percent" aria-label="Percentage">
         <i class="fas fa-percentage"></i>
       </button>
-      <button class="btn operator" data-action="divide" aria-label="Divide">
+      <button class="btn operator btn-glow" data-action="divide" aria-label="Divide">
         <i class="fas fa-divide"></i>
       </button>
 
@@ -436,7 +571,7 @@
       <button class="btn number" data-number="7" aria-label="7">7</button>
       <button class="btn number" data-number="8" aria-label="8">8</button>
       <button class="btn number" data-number="9" aria-label="9">9</button>
-      <button class="btn operator" data-action="multiply" aria-label="Multiply">
+      <button class="btn operator btn-glow" data-action="multiply" aria-label="Multiply">
         <i class="fas fa-times"></i>
       </button>
 
@@ -444,7 +579,7 @@
       <button class="btn number" data-number="4" aria-label="4">4</button>
       <button class="btn number" data-number="5" aria-label="5">5</button>
       <button class="btn number" data-number="6" aria-label="6">6</button>
-      <button class="btn operator" data-action="subtract" aria-label="Subtract">
+      <button class="btn operator btn-glow" data-action="subtract" aria-label="Subtract">
         <i class="fas fa-minus"></i>
       </button>
 
@@ -452,7 +587,7 @@
       <button class="btn number" data-number="1" aria-label="1">1</button>
       <button class="btn number" data-number="2" aria-label="2">2</button>
       <button class="btn number" data-number="3" aria-label="3">3</button>
-      <button class="btn operator" data-action="add" aria-label="Add">
+      <button class="btn operator btn-glow" data-action="add" aria-label="Add">
         <i class="fas fa-plus"></i>
       </button>
 
@@ -462,7 +597,7 @@
       <button class="btn" data-action="backspace" aria-label="Backspace">
         <i class="fas fa-backspace"></i>
       </button>
-      <button class="btn equals" data-action="calculate" aria-label="Equals">
+      <button class="btn equals btn-glow" data-action="calculate" aria-label="Equals">
         <i class="fas fa-equals"></i>
       </button>
     </div>
@@ -521,6 +656,14 @@
     // DOM elements
     const historyDisplay = document.getElementById('history');
     const resultDisplay = document.getElementById('result');
+
+    // Enhanced button press animation
+    function animateButton(button) {
+      button.classList.add('btn-press');
+      setTimeout(() => {
+        button.classList.remove('btn-press');
+      }, 300);
+    }
 
     // Update display with enhanced animations and proper negative number handling
     function updateDisplay() {
@@ -632,6 +775,16 @@
       previousInput = currentInput;
       operation = op;
       shouldResetInput = true;
+      
+      // Visual feedback for active operation
+      document.querySelectorAll('.btn.operator').forEach(btn => {
+        btn.classList.remove('operation-active');
+      });
+      const activeBtn = document.querySelector(`[data-action="${op}"]`);
+      if (activeBtn) {
+        activeBtn.classList.add('operation-active');
+      }
+      
       updateDisplay();
     }
 
@@ -694,6 +847,17 @@
         previousInput = '';
         shouldResetInput = true;
         
+        // Success animation
+        resultDisplay.classList.add('success');
+        setTimeout(() => {
+          resultDisplay.classList.remove('success');
+        }, 600);
+        
+        // Remove active operation highlight
+        document.querySelectorAll('.btn.operator').forEach(btn => {
+          btn.classList.remove('operation-active');
+        });
+        
         isCalculating = false;
         resultDisplay.classList.remove('calculating');
         updateDisplay();
@@ -706,6 +870,12 @@
       previousInput = '';
       operation = null;
       shouldResetInput = false;
+      
+      // Remove active operation highlight
+      document.querySelectorAll('.btn.operator').forEach(btn => {
+        btn.classList.remove('operation-active');
+      });
+      
       updateDisplay();
     }
 
@@ -785,10 +955,7 @@
     document.querySelectorAll('[data-number]').forEach(button => {
       button.addEventListener('click', (e) => {
         appendNumber(button.getAttribute('data-number'));
-        e.currentTarget.style.transform = 'scale(0.94)';
-        setTimeout(() => {
-          e.currentTarget.style.transform = '';
-        }, 150);
+        animateButton(e.currentTarget);
       });
     });
 
@@ -797,10 +964,7 @@
         const action = button.getAttribute('data-action');
         
         // Button press animation
-        e.currentTarget.style.transform = 'scale(0.94)';
-        setTimeout(() => {
-          e.currentTarget.style.transform = '';
-        }, 150);
+        animateButton(e.currentTarget);
         
         switch(action) {
           case 'clear':
@@ -831,25 +995,45 @@
     document.addEventListener('keydown', (event) => {
       if (event.key >= '0' && event.key <= '9') {
         appendNumber(event.key);
+        const button = document.querySelector(`[data-number="${event.key}"]`);
+        if (button) animateButton(button);
       } else if (event.key === '.') {
         appendDecimal();
+        const button = document.querySelector('[data-action="decimal"]');
+        if (button) animateButton(button);
       } else if (event.key === '+') {
         setOperation('add');
+        const button = document.querySelector('[data-action="add"]');
+        if (button) animateButton(button);
       } else if (event.key === '-') {
         setOperation('subtract');
+        const button = document.querySelector('[data-action="subtract"]');
+        if (button) animateButton(button);
       } else if (event.key === '*' || event.key === 'x') {
         setOperation('multiply');
+        const button = document.querySelector('[data-action="multiply"]');
+        if (button) animateButton(button);
       } else if (event.key === '/') {
         setOperation('divide');
+        const button = document.querySelector('[data-action="divide"]');
+        if (button) animateButton(button);
       } else if (event.key === 'Enter' || event.key === '=') {
         event.preventDefault();
         calculate();
+        const button = document.querySelector('[data-action="calculate"]');
+        if (button) animateButton(button);
       } else if (event.key === 'Escape' || event.key === 'Delete') {
         clearAll();
+        const button = document.querySelector('[data-action="clear"]');
+        if (button) animateButton(button);
       } else if (event.key === 'Backspace') {
         backspace();
+        const button = document.querySelector('[data-action="backspace"]');
+        if (button) animateButton(button);
       } else if (event.key === '%') {
         percent();
+        const button = document.querySelector('[data-action="percent"]');
+        if (button) animateButton(button);
       }
     });
 
