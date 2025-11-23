@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>CalcPlay</title>
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts - Playful yet Professional -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* Light theme - Modern Playful */
+      --bg: #ffffff;
+      --display-bg: #f8fafc;
+      --surface: #ffffff;
+      --text-primary: #1a1a1a;
+      --text-secondary: #666666;
+      --border: #e5e5e5;
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+      --shadow-soft: 0 2px 12px rgba(0, 0, 0, 0.04);
+      
+      --button-bg: #ffffff;
+      --button-hover: #f8f9fa;
+      --button-active: #f1f3f4;
+      
+      --operator-bg: #f1f3f4;
+      --operator-text: #1a1a1a;
+      --operator-hover: #e8eaed;
+      
+      --equals-bg: #6366f1;
+      --equals-text: #ffffff;
+      --equals-hover: #4f46e5;
+      
+      --clear-color: #ef4444;
+      --accent-color: #6366f1;
+      
+      --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    [data-theme="dark"] {
+      /* Dark theme - Modern Playful Dark */
+      --bg: #0f0f0f;
+      --display-bg: #1a1a1a;
+      --surface: #1a1a1a;
+      --text-primary: #ffffff;
+      --text-secondary: #a0a0a0;
+      --border: #333333;
+      
+      --button-bg: #2a2a2a;
+      --button-hover: #363636;
+      --button-active: #404040;
+      
+      --operator-bg: #333333;
+      --operator-text: #ffffff;
+      --operator-hover: #404040;
+      
+      --equals-bg: #818cf8;
+      --equals-text: #ffffff;
+      --equals-hover: #6366f1;
+      
+      --clear-color: #f87171;
+      --accent-color: #818cf8;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      height: 100%;
+      overflow: hidden;
+      background: var(--bg);
+    }
+
+    body {
+      color: var(--text-primary);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, Roboto, sans-serif;
+      display: flex;
+      flex-direction: column;
+      transition: var(--transition);
+      font-weight: 500;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 24px 20px;
+      flex-shrink: 0;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .app-title {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--text-primary);
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, var(--accent-color), #a855f7);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .theme-toggle {
+      background: var(--button-bg);
+      border: 1.5px solid var(--border);
+      width: 48px;
+      height: 48px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--text-primary);
+      transition: var(--transition);
+      font-size: 20px;
+    }
+
+    .theme-toggle:active {
+      transform: scale(0.92);
+      background: var(--button-active);
+      border-color: var(--accent-color);
+    }
+
+    .display-section {
+      flex: 1;
+      background: var(--display-bg);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 32px 24px;
+      overflow: hidden;
+      min-height: 0;
+      position: relative;
+    }
+
+    .history {
+      font-size: 18px;
+      color: var(--text-secondary);
+      text-align: right;
+      margin-bottom: 16px;
+      min-height: 24px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      transition: var(--transition);
+      font-weight: 600;
+      opacity: 0.9;
+      letter-spacing: -0.2px;
+    }
+
+    .result-container {
+      position: relative;
+      overflow: hidden;
+      text-align: right;
+    }
+
+    .result {
+      font-size: clamp(56px, 14vw, 72px);
+      font-weight: 700;
+      text-align: right;
+      line-height: 1.1;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      letter-spacing: -2px;
+      will-change: transform;
+      transform-origin: right center;
+      display: inline-block;
+      max-width: 100%;
+      direction: ltr; /* Ensure proper text direction */
+    }
+
+    /* Fix for negative numbers - proper alignment */
+    .negative-number {
+      direction: ltr;
+      unicode-bidi: plaintext;
+    }
+
+    .keypad-section {
+      height: 58vh;
+      max-height: 420px;
+      min-height: 360px;
+      background: var(--surface);
+      display: flex;
+      flex-direction: column;
+      padding: 24px;
+      border-top: 1px solid var(--border);
+      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.03);
+    }
+
+    .keypad {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(5, 1fr);
+      gap: 14px;
+      height: 100%;
+      width: 100%;
+    }
+
+    .btn {
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 26px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      border: none;
+      background: var(--button-bg);
+      color: var(--text-primary);
+      user-select: none;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: currentColor;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .btn:active::before {
+      opacity: 0.1;
+    }
+
+    .btn:active {
+      transform: scale(0.94);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn.operator {
+      background: var(--operator-bg);
+      color: var(--operator-text);
+      font-weight: 700;
+      font-size: 24px;
+    }
+
+    .btn.operator:active {
+      background: var(--operator-hover);
+    }
+
+    .btn.equals {
+      background: var(--equals-bg);
+      color: var(--equals-text);
+      font-weight: 700;
+      font-size: 26px;
+    }
+
+    .btn.equals:active {
+      background: var(--equals-hover);
+    }
+
+    .btn.clear {
+      color: var(--clear-color);
+      font-weight: 700;
+    }
+
+    .btn.number {
+      font-weight: 600;
+      font-size: 26px;
+    }
+
+    .btn i {
+      font-size: 22px;
+      font-weight: 600;
+    }
+
+    /* Enhanced number transitions */
+    .number-transition {
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    /* Haptic feedback simulation */
+    @media (hover: hover) {
+      .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+      }
+      
+      .btn.equals:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+      }
+    }
+
+    /* Focus states for accessibility */
+    .btn:focus-visible {
+      outline: 3px solid var(--accent-color);
+      outline-offset: 2px;
+    }
+
+    /* Responsive adjustments */
+    @media (max-height: 700px) {
+      .keypad-section {
+        height: 52vh;
+        padding: 20px;
+      }
+      
+      .display-section {
+        padding: 24px 20px;
+      }
+      
+      .btn {
+        font-size: 24px;
+        border-radius: 18px;
+      }
+      
+      .result {
+        font-size: clamp(48px, 12vw, 60px);
+      }
+      
+      .history {
+        font-size: 16px;
+        margin-bottom: 12px;
+      }
+    }
+
+    @media (max-width: 350px) {
+      .header {
+        padding: 20px 20px 16px;
+      }
+      
+      .display-section {
+        padding: 20px;
+      }
+      
+      .keypad-section {
+        padding: 20px;
+        gap: 12px;
+      }
+      
+      .btn {
+        font-size: 22px;
+        border-radius: 16px;
+      }
+      
+      .result {
+        font-size: clamp(42px, 11vw, 52px);
+      }
+      
+      .history {
+        font-size: 15px;
+      }
+      
+      .app-title {
+        font-size: 22px;
+      }
+    }
+
+    /* Safe area support */
+    @supports(padding: max(0px)) {
+      .header, .display-section, .keypad-section {
+        padding-left: max(24px, env(safe-area-inset-left));
+        padding-right: max(24px, env(safe-area-inset-right));
+      }
+      
+      .keypad-section {
+        padding-bottom: max(24px, env(safe-area-inset-bottom));
+      }
+    }
+
+    /* Loading animation */
+    @keyframes subtleGlow {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.95; }
+    }
+
+    .calculating {
+      animation: subtleGlow 1s ease-in-out infinite;
+    }
+
+    /* Icon fallback */
+    .icon-fallback {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-weight: 700;
+    }
+
+    /* Fix for long numbers */
+    .result-long {
+      font-size: clamp(42px, 10vw, 56px);
+    }
+
+    .result-very-long {
+      font-size: clamp(36px, 8vw, 48px);
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="app-title">CalcPlay</div>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+      <i class="fas fa-moon"></i>
+    </button>
+  </div>
+
+  <div class="display-section">
+    <div class="history" id="history"></div>
+    <div class="result-container">
+      <div class="result number-transition" id="result">0</div>
+    </div>
+  </div>
+
+  <div class="keypad-section">
+    <div class="keypad">
+      <!-- Row 1 -->
+      <button class="btn clear" data-action="clear" aria-label="Clear">
+        <i class="fas fa-undo-alt"></i>
+      </button>
+      <button class="btn operator" data-action="toggleSign" aria-label="Toggle sign">
+        <i class="fas fa-plus-minus"></i>
+      </button>
+      <button class="btn operator" data-action="percent" aria-label="Percentage">
+        <i class="fas fa-percentage"></i>
+      </button>
+      <button class="btn operator" data-action="divide" aria-label="Divide">
+        <i class="fas fa-divide"></i>
+      </button>
+
+      <!-- Row 2 -->
+      <button class="btn number" data-number="7" aria-label="7">7</button>
+      <button class="btn number" data-number="8" aria-label="8">8</button>
+      <button class="btn number" data-number="9" aria-label="9">9</button>
+      <button class="btn operator" data-action="multiply" aria-label="Multiply">
+        <i class="fas fa-times"></i>
+      </button>
+
+      <!-- Row 3 -->
+      <button class="btn number" data-number="4" aria-label="4">4</button>
+      <button class="btn number" data-number="5" aria-label="5">5</button>
+      <button class="btn number" data-number="6" aria-label="6">6</button>
+      <button class="btn operator" data-action="subtract" aria-label="Subtract">
+        <i class="fas fa-minus"></i>
+      </button>
+
+      <!-- Row 4 -->
+      <button class="btn number" data-number="1" aria-label="1">1</button>
+      <button class="btn number" data-number="2" aria-label="2">2</button>
+      <button class="btn number" data-number="3" aria-label="3">3</button>
+      <button class="btn operator" data-action="add" aria-label="Add">
+        <i class="fas fa-plus"></i>
+      </button>
+
+      <!-- Row 5 -->
+      <button class="btn number" data-number="0" aria-label="0">0</button>
+      <button class="btn" data-action="decimal" aria-label="Decimal point">.</button>
+      <button class="btn" data-action="backspace" aria-label="Backspace">
+        <i class="fas fa-backspace"></i>
+      </button>
+      <button class="btn equals" data-action="calculate" aria-label="Equals">
+        <i class="fas fa-equals"></i>
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // Check if Font Awesome loaded, otherwise show text fallbacks
+    function checkIconsLoaded() {
+      const styleSheets = Array.from(document.styleSheets);
+      const faLoaded = styleSheets.some(sheet => {
+        try {
+          return sheet.href && sheet.href.includes('font-awesome');
+        } catch (e) {
+          return false;
+        }
+      });
+      
+      if (!faLoaded) {
+        console.warn('Font Awesome not loaded, using text fallbacks');
+        document.querySelectorAll('.btn i').forEach(icon => {
+          const parent = icon.parentElement;
+          const action = parent.getAttribute('data-action') || '';
+          const number = parent.getAttribute('data-number');
+          
+          if (number) return; // Keep numbers as they are
+          
+          let text = '';
+          switch(action) {
+            case 'clear': text = 'C'; break;
+            case 'toggleSign': text = '+/-'; break;
+            case 'percent': text = '%'; break;
+            case 'divide': text = '÷'; break;
+            case 'multiply': text = '×'; break;
+            case 'subtract': text = '−'; break;
+            case 'add': text = '+'; break;
+            case 'backspace': text = '⌫'; break;
+            case 'calculate': text = '='; break;
+            case 'decimal': text = '.'; break;
+          }
+          
+          if (text) {
+            parent.innerHTML = `<span class="icon-fallback">${text}</span>`;
+          }
+        });
+      }
+    }
+
+    // Calculator state
+    let currentInput = '0';
+    let previousInput = '';
+    let operation = null;
+    let shouldResetInput = false;
+    let isDarkMode = false;
+    let isCalculating = false;
+
+    // DOM elements
+    const historyDisplay = document.getElementById('history');
+    const resultDisplay = document.getElementById('result');
+
+    // Update display with enhanced animations and proper negative number handling
+    function updateDisplay() {
+      const newResult = formatNumber(currentInput);
+      
+      // Enhanced smooth transition
+      resultDisplay.style.opacity = '0';
+      resultDisplay.style.transform = 'translateY(8px) scale(0.98)';
+      
+      setTimeout(() => {
+        resultDisplay.textContent = newResult;
+        
+        // Apply proper styling for negative numbers
+        if (currentInput.startsWith('-')) {
+          resultDisplay.classList.add('negative-number');
+        } else {
+          resultDisplay.classList.remove('negative-number');
+        }
+        
+        // Adjust font size for long numbers
+        if (newResult.length > 12) {
+          resultDisplay.classList.add('result-very-long');
+          resultDisplay.classList.remove('result-long');
+        } else if (newResult.length > 8) {
+          resultDisplay.classList.add('result-long');
+          resultDisplay.classList.remove('result-very-long');
+        } else {
+          resultDisplay.classList.remove('result-long', 'result-very-long');
+        }
+        
+        resultDisplay.style.opacity = '1';
+        resultDisplay.style.transform = 'translateY(0) scale(1)';
+      }, 50);
+      
+      // Update history with fade animation
+      const newHistory = operation && previousInput 
+        ? `${formatNumber(previousInput)} ${getOperationSymbol(operation)}`
+        : (previousInput ? formatNumber(previousInput) : '');
+      
+      historyDisplay.style.opacity = '0';
+      setTimeout(() => {
+        historyDisplay.textContent = newHistory;
+        historyDisplay.style.opacity = '0.9';
+      }, 100);
+    }
+
+    // Format number with commas and proper negative handling
+    function formatNumber(num) {
+      if (num === '' || num === '-') return '0';
+      
+      const isNegative = num.startsWith('-');
+      const absoluteNum = isNegative ? num.slice(1) : num;
+      
+      if (absoluteNum.includes('.')) {
+        const parts = absoluteNum.split('.');
+        const integerPart = parts[0] || '0';
+        const decimalPart = parts[1] || '';
+        
+        // Properly format with commas and handle negative sign
+        const formattedInteger = parseInt(integerPart).toLocaleString();
+        return `${isNegative ? '-' : ''}${formattedInteger}.${decimalPart}`;
+      }
+      
+      // Properly format without decimal and handle negative sign
+      const formattedNumber = parseInt(absoluteNum).toLocaleString();
+      return `${isNegative ? '-' : ''}${formattedNumber}`;
+    }
+
+    // Get symbol for operation
+    function getOperationSymbol(op) {
+      switch(op) {
+        case 'add': return '+';
+        case 'subtract': return '−';
+        case 'multiply': return '×';
+        case 'divide': return '÷';
+        default: return '';
+      }
+    }
+
+    // Enhanced number input with proper validation
+    function appendNumber(number) {
+      if (shouldResetInput) {
+        currentInput = number;
+        shouldResetInput = false;
+      } else if (currentInput === '0' && number !== '.') {
+        currentInput = number;
+      } else if (currentInput.length < 15) { // Prevent too long numbers
+        currentInput += number;
+      }
+      updateDisplay();
+    }
+
+    // Add decimal point with proper validation
+    function appendDecimal() {
+      if (shouldResetInput) {
+        currentInput = '0.';
+        shouldResetInput = false;
+      } else if (!currentInput.includes('.') && currentInput.length < 14) {
+        currentInput += '.';
+      }
+      updateDisplay();
+    }
+
+    // Set operation with visual feedback
+    function setOperation(op) {
+      if (operation && !shouldResetInput) {
+        calculate();
+      }
+      previousInput = currentInput;
+      operation = op;
+      shouldResetInput = true;
+      updateDisplay();
+    }
+
+    // Calculate result with loading state
+    function calculate() {
+      if (!operation || shouldResetInput || isCalculating) return;
+      
+      isCalculating = true;
+      resultDisplay.classList.add('calculating');
+      
+      setTimeout(() => {
+        const prev = parseFloat(previousInput.replace(/,/g, ''));
+        const curr = parseFloat(currentInput.replace(/,/g, ''));
+        
+        if (isNaN(prev) || isNaN(curr)) {
+          isCalculating = false;
+          resultDisplay.classList.remove('calculating');
+          return;
+        }
+        
+        let result;
+        switch (operation) {
+          case 'add':
+            result = prev + curr;
+            break;
+          case 'subtract':
+            result = prev - curr;
+            break;
+          case 'multiply':
+            result = prev * curr;
+            break;
+          case 'divide':
+            if (curr === 0) {
+              showError('Cannot divide by zero');
+              isCalculating = false;
+              resultDisplay.classList.remove('calculating');
+              return;
+            }
+            result = prev / curr;
+            break;
+          default:
+            isCalculating = false;
+            resultDisplay.classList.remove('calculating');
+            return;
+        }
+        
+        // Enhanced rounding and validation
+        result = Math.round(result * 100000000) / 100000000;
+        
+        // Prevent extremely large numbers
+        if (Math.abs(result) > 9999999999999) {
+          showError('Number too large');
+          isCalculating = false;
+          resultDisplay.classList.remove('calculating');
+          return;
+        }
+        
+        currentInput = result.toString();
+        operation = null;
+        previousInput = '';
+        shouldResetInput = true;
+        
+        isCalculating = false;
+        resultDisplay.classList.remove('calculating');
+        updateDisplay();
+      }, 300);
+    }
+
+    // Clear all
+    function clearAll() {
+      currentInput = '0';
+      previousInput = '';
+      operation = null;
+      shouldResetInput = false;
+      updateDisplay();
+    }
+
+    // Toggle sign with proper validation
+    function toggleSign() {
+      if (currentInput !== '0' && currentInput !== '') {
+        if (currentInput.startsWith('-')) {
+          currentInput = currentInput.slice(1);
+        } else {
+          currentInput = '-' + currentInput;
+        }
+      }
+      updateDisplay();
+    }
+
+    // Calculate percentage
+    function percent() {
+      const num = parseFloat(currentInput.replace(/,/g, ''));
+      if (!isNaN(num)) {
+        currentInput = (num / 100).toString();
+        updateDisplay();
+      }
+    }
+
+    // Enhanced backspace
+    function backspace() {
+      if (currentInput.length > 1) {
+        currentInput = currentInput.slice(0, -1);
+        // Ensure we don't end with just a minus sign
+        if (currentInput === '-') {
+          currentInput = '0';
+        }
+      } else {
+        currentInput = '0';
+      }
+      updateDisplay();
+    }
+
+    // Show error with better styling
+    function showError(message) {
+      resultDisplay.textContent = 'Error';
+      historyDisplay.textContent = message;
+      resultDisplay.style.color = 'var(--clear-color)';
+      
+      setTimeout(() => {
+        resultDisplay.style.color = '';
+        clearAll();
+      }, 2000);
+    }
+
+    // Theme toggle functionality
+    const themeToggle = document.getElementById('themeToggle');
+    themeToggle.addEventListener('click', () => {
+      isDarkMode = !isDarkMode;
+      document.body.setAttribute('data-theme', isDarkMode ? 'dark' : '');
+      themeToggle.innerHTML = isDarkMode 
+        ? '<i class="fas fa-sun"></i>' 
+        : '<i class="fas fa-moon"></i>';
+      
+      themeToggle.style.borderColor = isDarkMode ? 'var(--accent-color)' : 'var(--border)';
+      
+      localStorage.setItem('calculator-theme', isDarkMode ? 'dark' : 'light');
+    });
+
+    // Load saved theme
+    function loadTheme() {
+      const savedTheme = localStorage.getItem('calculator-theme');
+      if (savedTheme === 'dark') {
+        isDarkMode = true;
+        document.body.setAttribute('data-theme', 'dark');
+        themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        themeToggle.style.borderColor = 'var(--accent-color)';
+      }
+    }
+
+    // Enhanced button event listeners
+    document.querySelectorAll('[data-number]').forEach(button => {
+      button.addEventListener('click', (e) => {
+        appendNumber(button.getAttribute('data-number'));
+        e.currentTarget.style.transform = 'scale(0.94)';
+        setTimeout(() => {
+          e.currentTarget.style.transform = '';
+        }, 150);
+      });
+    });
+
+    document.querySelectorAll('[data-action]').forEach(button => {
+      button.addEventListener('click', (e) => {
+        const action = button.getAttribute('data-action');
+        
+        // Button press animation
+        e.currentTarget.style.transform = 'scale(0.94)';
+        setTimeout(() => {
+          e.currentTarget.style.transform = '';
+        }, 150);
+        
+        switch(action) {
+          case 'clear':
+            clearAll();
+            break;
+          case 'decimal':
+            appendDecimal();
+            break;
+          case 'toggleSign':
+            toggleSign();
+            break;
+          case 'percent':
+            percent();
+            break;
+          case 'backspace':
+            backspace();
+            break;
+          case 'calculate':
+            calculate();
+            break;
+          default:
+            setOperation(action);
+        }
+      });
+    });
+
+    // Enhanced keyboard support
+    document.addEventListener('keydown', (event) => {
+      if (event.key >= '0' && event.key <= '9') {
+        appendNumber(event.key);
+      } else if (event.key === '.') {
+        appendDecimal();
+      } else if (event.key === '+') {
+        setOperation('add');
+      } else if (event.key === '-') {
+        setOperation('subtract');
+      } else if (event.key === '*' || event.key === 'x') {
+        setOperation('multiply');
+      } else if (event.key === '/') {
+        setOperation('divide');
+      } else if (event.key === 'Enter' || event.key === '=') {
+        event.preventDefault();
+        calculate();
+      } else if (event.key === 'Escape' || event.key === 'Delete') {
+        clearAll();
+      } else if (event.key === 'Backspace') {
+        backspace();
+      } else if (event.key === '%') {
+        percent();
+      }
+    });
+
+    // Initialize
+    loadTheme();
+    updateDisplay();
+    checkIconsLoaded();
+
+    // Prevent zoom on double tap
+    document.addEventListener('touchstart', function(e) {
+      if (e.touches.length > 1) {
+        e.preventDefault();
+      }
+    });
+
+    let lastTouchEnd = 0;
+    document.addEventListener('touchend', function(e) {
+      const now = (new Date()).getTime();
+      if (now - lastTouchEnd <= 300) {
+        e.preventDefault();
+      }
+      lastTouchEnd = now;
+    }, false);
+  </script>
+</body>
+</html>
