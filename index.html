@@ -3,68 +3,65 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>CalcPro</title>
-  <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- Google Fonts - Modern & Clean -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <title>Calculator Pro</title>
+  <!-- Proper Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <!-- Google Fonts - Clean & Modern -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      /* Light theme - Modern & Clean */
-      --bg: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-      --display-bg: rgba(255, 255, 255, 0.95);
-      --surface: rgba(255, 255, 255, 0.98);
-      --text-primary: #1e293b;
-      --text-secondary: #64748b;
-      --border: rgba(226, 232, 240, 0.8);
-      --shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
-      --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.04);
-      --shadow-button: 0 4px 12px rgba(0, 0, 0, 0.08);
+      /* Light theme - Clean Black, White & Grey */
+      --bg: #ffffff;
+      --display-bg: #f8f9fa;
+      --surface: #ffffff;
+      --text-primary: #000000;
+      --text-secondary: #666666;
+      --border: #e0e0e0;
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+      --shadow-soft: 0 2px 12px rgba(0, 0, 0, 0.04);
+      --shadow-button: 0 2px 8px rgba(0, 0, 0, 0.08);
       
-      --button-bg: rgba(255, 255, 255, 0.9);
-      --button-hover: rgba(248, 250, 252, 0.9);
-      --button-active: rgba(241, 245, 249, 0.9);
+      --button-bg: #ffffff;
+      --button-hover: #f5f5f5;
+      --button-active: #eeeeee;
       
-      --operator-bg: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-      --operator-text: #ffffff;
-      --operator-hover: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+      --operator-bg: #f0f0f0;
+      --operator-text: #000000;
+      --operator-hover: #e5e5e5;
       
-      --equals-bg: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      --equals-bg: #000000;
       --equals-text: #ffffff;
-      --equals-hover: linear-gradient(135deg, #059669 0%, #047857 100%);
+      --equals-hover: #333333;
       
-      --clear-color: #ef4444;
-      --accent-color: #6366f1;
-      --accent-glow: rgba(99, 102, 241, 0.15);
+      --clear-color: #d32f2f;
+      --accent-color: #000000;
       
-      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      --transition-smooth: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     }
 
     [data-theme="dark"] {
-      /* Dark theme - Premium Dark */
-      --bg: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-      --display-bg: rgba(30, 41, 59, 0.95);
-      --surface: rgba(30, 41, 59, 0.98);
-      --text-primary: #f1f5f9;
-      --text-secondary: #94a3b8;
-      --border: rgba(51, 65, 85, 0.6);
+      /* Dark theme - Clean Black & Grey */
+      --bg: #121212;
+      --display-bg: #1e1e1e;
+      --surface: #2d2d2d;
+      --text-primary: #ffffff;
+      --text-secondary: #b0b0b0;
+      --border: #404040;
       
-      --button-bg: rgba(30, 41, 59, 0.9);
-      --button-hover: rgba(41, 55, 77, 0.9);
-      --button-active: rgba(51, 65, 85, 0.9);
+      --button-bg: #2d2d2d;
+      --button-hover: #3d3d3d;
+      --button-active: #4d4d4d;
       
-      --operator-bg: linear-gradient(135deg, #818cf8 0%, #a78bfa 100%);
-      --operator-text: #1e293b;
-      --operator-hover: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+      --operator-bg: #404040;
+      --operator-text: #ffffff;
+      --operator-hover: #505050;
       
-      --equals-bg: linear-gradient(135deg, #34d399 0%, #10b981 100%);
-      --equals-text: #1e293b;
-      --equals-hover: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      --equals-bg: #ffffff;
+      --equals-text: #000000;
+      --equals-hover: #e0e0e0;
       
-      --clear-color: #f87171;
-      --accent-color: #818cf8;
-      --accent-glow: rgba(129, 140, 248, 0.2);
+      --clear-color: #ff6b6b;
+      --accent-color: #ffffff;
     }
 
     * {
@@ -85,79 +82,44 @@
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, Roboto, sans-serif;
       display: flex;
       flex-direction: column;
-      transition: var(--transition-smooth);
+      transition: var(--transition);
       font-weight: 500;
-      backdrop-filter: blur(20px);
     }
 
     .header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 28px 28px 20px;
+      padding: 24px 24px 20px;
       flex-shrink: 0;
-      background: transparent;
+      background: var(--bg);
     }
 
     .app-title {
-      font-size: 26px;
-      font-weight: 800;
+      font-size: 22px;
+      font-weight: 700;
       color: var(--text-primary);
-      letter-spacing: -0.5px;
-      background: linear-gradient(135deg, var(--accent-color), #a855f7);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      position: relative;
-    }
-
-    .app-title::after {
-      content: '';
-      position: absolute;
-      bottom: -4px;
-      left: 0;
-      width: 30px;
-      height: 3px;
-      background: linear-gradient(135deg, var(--accent-color), #a855f7);
-      border-radius: 2px;
+      letter-spacing: -0.3px;
     }
 
     .theme-toggle {
       background: var(--button-bg);
       border: 1.5px solid var(--border);
-      width: 52px;
-      height: 52px;
-      border-radius: 16px;
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       color: var(--text-primary);
       transition: var(--transition);
-      font-size: 20px;
-      backdrop-filter: blur(10px);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .theme-toggle::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: var(--accent-glow);
-      opacity: 0;
-      transition: var(--transition);
-    }
-
-    .theme-toggle:hover::before {
-      opacity: 1;
+      font-size: 18px;
     }
 
     .theme-toggle:active {
       transform: scale(0.92);
+      background: var(--button-active);
     }
 
     .display-section {
@@ -166,28 +128,13 @@
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      padding: 32px 28px;
+      padding: 32px 24px;
       overflow: hidden;
       min-height: 0;
       position: relative;
       margin: 0 20px 20px;
-      border-radius: 24px;
-      backdrop-filter: blur(20px);
-      box-shadow: var(--shadow);
+      border-radius: 20px;
       border: 1px solid var(--border);
-    }
-
-    .display-section::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(135deg, var(--accent-glow), transparent);
-      opacity: 0.3;
-      border-radius: 24px;
-      pointer-events: none;
     }
 
     .history {
@@ -202,7 +149,6 @@
       transition: var(--transition);
       font-weight: 500;
       opacity: 0.9;
-      letter-spacing: -0.2px;
     }
 
     .result-container {
@@ -212,14 +158,14 @@
     }
 
     .result {
-      font-size: clamp(60px, 15vw, 80px);
+      font-size: clamp(56px, 14vw, 72px);
       font-weight: 300;
       text-align: right;
       line-height: 1.1;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-      transition: var(--transition-smooth);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       letter-spacing: -2px;
       will-change: transform;
       transform-origin: right center;
@@ -230,38 +176,38 @@
       font-variant-numeric: tabular-nums;
     }
 
-    /* Fix for negative numbers - proper alignment */
+    /* Fix for negative numbers */
     .negative-number {
       direction: ltr;
       unicode-bidi: plaintext;
     }
 
     .keypad-section {
-      height: 55vh;
-      max-height: 440px;
-      min-height: 380px;
-      background: transparent;
+      height: 58vh;
+      max-height: 420px;
+      min-height: 360px;
+      background: var(--bg);
       display: flex;
       flex-direction: column;
-      padding: 0 28px 28px;
+      padding: 0 24px 24px;
     }
 
     .keypad {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       grid-template-rows: repeat(5, 1fr);
-      gap: 16px;
+      gap: 14px;
       height: 100%;
       width: 100%;
     }
 
     .btn {
-      border-radius: 20px;
+      border-radius: 16px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 26px;
-      font-weight: 600;
+      font-size: 24px;
+      font-weight: 500;
       cursor: pointer;
       transition: var(--transition);
       border: none;
@@ -272,7 +218,6 @@
       overflow: hidden;
       box-shadow: var(--shadow-button);
       font-family: 'Inter', sans-serif;
-      backdrop-filter: blur(10px);
       border: 1px solid var(--border);
     }
 
@@ -286,75 +231,51 @@
       background: currentColor;
       opacity: 0;
       transition: opacity 0.2s ease;
-      border-radius: 20px;
-    }
-
-    .btn::after {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent);
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      border-radius: 20px;
+      border-radius: 16px;
     }
 
     .btn:active::before {
       opacity: 0.1;
     }
 
-    .btn:active::after {
-      opacity: 1;
-    }
-
     .btn:active {
       transform: scale(0.94);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
 
     .btn.operator {
       background: var(--operator-bg);
       color: var(--operator-text);
-      font-weight: 600;
-      font-size: 24px;
-      border: none;
-      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.3);
+      font-weight: 500;
+      font-size: 22px;
     }
 
     .btn.operator:active {
       background: var(--operator-hover);
-      box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
     }
 
     .btn.equals {
       background: var(--equals-bg);
       color: var(--equals-text);
-      font-weight: 600;
-      font-size: 26px;
-      border: none;
-      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3);
+      font-weight: 500;
+      font-size: 24px;
     }
 
     .btn.equals:active {
       background: var(--equals-hover);
-      box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
     }
 
     .btn.clear {
       color: var(--clear-color);
-      font-weight: 600;
+      font-weight: 500;
     }
 
     .btn.number {
-      font-weight: 500;
-      font-size: 26px;
+      font-weight: 400;
+      font-size: 24px;
     }
 
     .btn i {
-      font-size: 22px;
+      font-size: 20px;
       font-weight: 500;
     }
 
@@ -363,7 +284,7 @@
       transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
-    /* Micro-interactions */
+    /* Button press animation */
     .btn-press {
       animation: btnPress 0.3s ease;
     }
@@ -374,72 +295,31 @@
       100% { transform: scale(1); }
     }
 
-    /* Glow effect for important buttons */
-    .btn-glow {
-      position: relative;
-    }
-
-    .btn-glow::before {
-      content: '';
-      position: absolute;
-      top: -2px;
-      left: -2px;
-      right: -2px;
-      bottom: -2px;
-      background: var(--operator-bg);
-      border-radius: 22px;
-      z-index: -1;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-
-    .btn-glow:hover::before {
-      opacity: 0.3;
-    }
-
-    /* Haptic feedback simulation */
-    @media (hover: hover) {
-      .btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
-      }
-      
-      .btn.operator:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
-      }
-      
-      .btn.equals:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4);
-      }
-    }
-
     /* Focus states for accessibility */
     .btn:focus-visible {
-      outline: 3px solid var(--accent-color);
+      outline: 2px solid var(--accent-color);
       outline-offset: 2px;
     }
 
     /* Responsive adjustments */
     @media (max-height: 700px) {
       .keypad-section {
-        height: 50vh;
-        padding: 0 24px 24px;
+        height: 52vh;
+        padding: 0 20px 20px;
       }
       
       .display-section {
-        padding: 28px 24px;
+        padding: 28px 20px;
         margin: 0 16px 16px;
       }
       
       .btn {
-        font-size: 24px;
-        border-radius: 18px;
+        font-size: 22px;
+        border-radius: 14px;
       }
       
       .result {
-        font-size: clamp(52px, 13vw, 68px);
+        font-size: clamp(48px, 12vw, 60px);
       }
       
       .history {
@@ -450,26 +330,26 @@
 
     @media (max-width: 350px) {
       .header {
-        padding: 24px 24px 16px;
+        padding: 20px 20px 16px;
       }
       
       .display-section {
-        padding: 24px;
+        padding: 24px 20px;
         margin: 0 12px 12px;
       }
       
       .keypad-section {
-        padding: 0 24px 24px;
-        gap: 14px;
+        padding: 0 20px 20px;
+        gap: 12px;
       }
       
       .btn {
-        font-size: 22px;
-        border-radius: 16px;
+        font-size: 20px;
+        border-radius: 12px;
       }
       
       .result {
-        font-size: clamp(46px, 12vw, 58px);
+        font-size: clamp(42px, 11vw, 52px);
       }
       
       .history {
@@ -477,19 +357,19 @@
       }
       
       .app-title {
-        font-size: 24px;
+        font-size: 20px;
       }
     }
 
     /* Safe area support */
     @supports(padding: max(0px)) {
       .header, .display-section, .keypad-section {
-        padding-left: max(28px, env(safe-area-inset-left));
-        padding-right: max(28px, env(safe-area-inset-right));
+        padding-left: max(24px, env(safe-area-inset-left));
+        padding-right: max(24px, env(safe-area-inset-right));
       }
       
       .keypad-section {
-        padding-bottom: max(28px, env(safe-area-inset-bottom));
+        padding-bottom: max(24px, env(safe-area-inset-bottom));
       }
     }
 
@@ -517,7 +397,7 @@
     /* Icon fallback */
     .icon-fallback {
       font-family: 'Inter', sans-serif;
-      font-weight: 700;
+      font-weight: 500;
     }
 
     /* Fix for long numbers */
@@ -531,14 +411,14 @@
 
     /* Visual feedback for operations */
     .operation-active {
-      background: var(--accent-glow) !important;
-      color: var(--accent-color) !important;
+      background: var(--accent-color) !important;
+      color: var(--button-bg) !important;
     }
   </style>
 </head>
 <body>
   <div class="header">
-    <div class="app-title">CalcPro</div>
+    <div class="app-title">Calculator</div>
     <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
       <i class="fas fa-moon"></i>
     </button>
@@ -554,16 +434,16 @@
   <div class="keypad-section">
     <div class="keypad">
       <!-- Row 1 -->
-      <button class="btn clear btn-glow" data-action="clear" aria-label="Clear">
+      <button class="btn clear" data-action="clear" aria-label="Clear">
         <i class="fas fa-undo-alt"></i>
       </button>
-      <button class="btn operator btn-glow" data-action="toggleSign" aria-label="Toggle sign">
+      <button class="btn operator" data-action="toggleSign" aria-label="Toggle sign">
         <i class="fas fa-plus-minus"></i>
       </button>
-      <button class="btn operator btn-glow" data-action="percent" aria-label="Percentage">
+      <button class="btn operator" data-action="percent" aria-label="Percentage">
         <i class="fas fa-percentage"></i>
       </button>
-      <button class="btn operator btn-glow" data-action="divide" aria-label="Divide">
+      <button class="btn operator" data-action="divide" aria-label="Divide">
         <i class="fas fa-divide"></i>
       </button>
 
@@ -571,7 +451,7 @@
       <button class="btn number" data-number="7" aria-label="7">7</button>
       <button class="btn number" data-number="8" aria-label="8">8</button>
       <button class="btn number" data-number="9" aria-label="9">9</button>
-      <button class="btn operator btn-glow" data-action="multiply" aria-label="Multiply">
+      <button class="btn operator" data-action="multiply" aria-label="Multiply">
         <i class="fas fa-times"></i>
       </button>
 
@@ -579,7 +459,7 @@
       <button class="btn number" data-number="4" aria-label="4">4</button>
       <button class="btn number" data-number="5" aria-label="5">5</button>
       <button class="btn number" data-number="6" aria-label="6">6</button>
-      <button class="btn operator btn-glow" data-action="subtract" aria-label="Subtract">
+      <button class="btn operator" data-action="subtract" aria-label="Subtract">
         <i class="fas fa-minus"></i>
       </button>
 
@@ -587,7 +467,7 @@
       <button class="btn number" data-number="1" aria-label="1">1</button>
       <button class="btn number" data-number="2" aria-label="2">2</button>
       <button class="btn number" data-number="3" aria-label="3">3</button>
-      <button class="btn operator btn-glow" data-action="add" aria-label="Add">
+      <button class="btn operator" data-action="add" aria-label="Add">
         <i class="fas fa-plus"></i>
       </button>
 
@@ -597,52 +477,55 @@
       <button class="btn" data-action="backspace" aria-label="Backspace">
         <i class="fas fa-backspace"></i>
       </button>
-      <button class="btn equals btn-glow" data-action="calculate" aria-label="Equals">
+      <button class="btn equals" data-action="calculate" aria-label="Equals">
         <i class="fas fa-equals"></i>
       </button>
     </div>
   </div>
 
   <script>
-    // Check if Font Awesome loaded, otherwise show text fallbacks
+    // Check if Font Awesome loaded with better detection
     function checkIconsLoaded() {
-      const styleSheets = Array.from(document.styleSheets);
-      const faLoaded = styleSheets.some(sheet => {
-        try {
-          return sheet.href && sheet.href.includes('font-awesome');
-        } catch (e) {
-          return false;
-        }
-      });
+      // Create test element to check if Font Awesome is working
+      const testIcon = document.createElement('i');
+      testIcon.className = 'fas fa-test';
+      document.body.appendChild(testIcon);
       
-      if (!faLoaded) {
-        console.warn('Font Awesome not loaded, using text fallbacks');
-        document.querySelectorAll('.btn i').forEach(icon => {
-          const parent = icon.parentElement;
-          const action = parent.getAttribute('data-action') || '';
-          const number = parent.getAttribute('data-number');
-          
-          if (number) return; // Keep numbers as they are
-          
-          let text = '';
-          switch(action) {
-            case 'clear': text = 'C'; break;
-            case 'toggleSign': text = '+/-'; break;
-            case 'percent': text = '%'; break;
-            case 'divide': text = '÷'; break;
-            case 'multiply': text = '×'; break;
-            case 'subtract': text = '−'; break;
-            case 'add': text = '+'; break;
-            case 'backspace': text = '⌫'; break;
-            case 'calculate': text = '='; break;
-            case 'decimal': text = '.'; break;
-          }
-          
-          if (text) {
-            parent.innerHTML = `<span class="icon-fallback">${text}</span>`;
-          }
-        });
-      }
+      setTimeout(() => {
+        const computedStyle = window.getComputedStyle(testIcon);
+        const fontFamily = computedStyle.fontFamily || '';
+        
+        if (!fontFamily.includes('Font Awesome')) {
+          console.warn('Font Awesome not loaded properly, using text fallbacks');
+          document.querySelectorAll('.btn i').forEach(icon => {
+            const parent = icon.parentElement;
+            const action = parent.getAttribute('data-action') || '';
+            const number = parent.getAttribute('data-number');
+            
+            if (number) return; // Keep numbers as they are
+            
+            let text = '';
+            switch(action) {
+              case 'clear': text = 'C'; break;
+              case 'toggleSign': text = '+/-'; break;
+              case 'percent': text = '%'; break;
+              case 'divide': text = '÷'; break;
+              case 'multiply': text = '×'; break;
+              case 'subtract': text = '−'; break;
+              case 'add': text = '+'; break;
+              case 'backspace': text = '⌫'; break;
+              case 'calculate': text = '='; break;
+              case 'decimal': text = '.'; break;
+            }
+            
+            if (text) {
+              parent.innerHTML = `<span class="icon-fallback">${text}</span>`;
+            }
+          });
+        }
+        
+        document.body.removeChild(testIcon);
+      }, 100);
     }
 
     // Calculator state
@@ -935,8 +818,6 @@
         ? '<i class="fas fa-sun"></i>' 
         : '<i class="fas fa-moon"></i>';
       
-      themeToggle.style.borderColor = isDarkMode ? 'var(--accent-color)' : 'var(--border)';
-      
       localStorage.setItem('calculator-theme', isDarkMode ? 'dark' : 'light');
     });
 
@@ -947,7 +828,6 @@
         isDarkMode = true;
         document.body.setAttribute('data-theme', 'dark');
         themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
-        themeToggle.style.borderColor = 'var(--accent-color)';
       }
     }
 
@@ -1040,7 +920,9 @@
     // Initialize
     loadTheme();
     updateDisplay();
-    checkIconsLoaded();
+    
+    // Check icons after a short delay to ensure everything is loaded
+    setTimeout(checkIconsLoaded, 500);
 
     // Prevent zoom on double tap
     document.addEventListener('touchstart', function(e) {
