@@ -3,11 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Calculator Pro</title>
-  <!-- Proper Font Awesome CDN -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <!-- Google Fonts - Clean & Modern -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <title>CalcPlay</title>
+  <!-- Multiple Font Awesome CDNs for reliability -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <!-- Backup CDN -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.2/css/all.min.css">
+  <!-- Playful Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     :root {
       /* Light theme - Clean Black, White & Grey */
@@ -79,11 +81,11 @@
 
     body {
       color: var(--text-primary);
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, Roboto, sans-serif;
+      font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, Roboto, sans-serif;
       display: flex;
       flex-direction: column;
       transition: var(--transition);
-      font-weight: 500;
+      font-weight: 600; /* Default bold weight */
     }
 
     .header {
@@ -96,25 +98,27 @@
     }
 
     .app-title {
-      font-size: 22px;
-      font-weight: 700;
+      font-size: 26px;
+      font-weight: 900; /* Extra bold for title */
       color: var(--text-primary);
-      letter-spacing: -0.3px;
+      letter-spacing: -0.5px;
+      text-transform: uppercase;
     }
 
     .theme-toggle {
       background: var(--button-bg);
-      border: 1.5px solid var(--border);
-      width: 44px;
-      height: 44px;
-      border-radius: 12px;
+      border: 2px solid var(--border);
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       color: var(--text-primary);
       transition: var(--transition);
-      font-size: 18px;
+      font-size: 20px;
+      font-weight: 700;
     }
 
     .theme-toggle:active {
@@ -134,7 +138,7 @@
       position: relative;
       margin: 0 20px 20px;
       border-radius: 20px;
-      border: 1px solid var(--border);
+      border: 2px solid var(--border);
     }
 
     .history {
@@ -158,8 +162,8 @@
     }
 
     .result {
-      font-size: clamp(56px, 14vw, 72px);
-      font-weight: 300;
+      font-size: clamp(56px, 14vw, 76px);
+      font-weight: 700; /* Bold for result */
       text-align: right;
       line-height: 1.1;
       overflow: hidden;
@@ -202,12 +206,12 @@
     }
 
     .btn {
-      border-radius: 16px;
+      border-radius: 18px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 24px;
-      font-weight: 500;
+      font-size: 26px;
+      font-weight: 700; /* Bold for all buttons */
       cursor: pointer;
       transition: var(--transition);
       border: none;
@@ -217,8 +221,8 @@
       position: relative;
       overflow: hidden;
       box-shadow: var(--shadow-button);
-      font-family: 'Inter', sans-serif;
-      border: 1px solid var(--border);
+      font-family: 'Poppins', sans-serif;
+      border: 2px solid var(--border);
     }
 
     .btn::before {
@@ -231,7 +235,7 @@
       background: currentColor;
       opacity: 0;
       transition: opacity 0.2s ease;
-      border-radius: 16px;
+      border-radius: 18px;
     }
 
     .btn:active::before {
@@ -245,8 +249,8 @@
     .btn.operator {
       background: var(--operator-bg);
       color: var(--operator-text);
-      font-weight: 500;
-      font-size: 22px;
+      font-weight: 800; /* Extra bold for operators */
+      font-size: 24px;
     }
 
     .btn.operator:active {
@@ -256,8 +260,8 @@
     .btn.equals {
       background: var(--equals-bg);
       color: var(--equals-text);
-      font-weight: 500;
-      font-size: 24px;
+      font-weight: 800; /* Extra bold for equals */
+      font-size: 26px;
     }
 
     .btn.equals:active {
@@ -266,17 +270,17 @@
 
     .btn.clear {
       color: var(--clear-color);
-      font-weight: 500;
+      font-weight: 800; /* Extra bold for clear */
     }
 
     .btn.number {
-      font-weight: 400;
-      font-size: 24px;
+      font-weight: 600; /* Semi-bold for numbers */
+      font-size: 26px;
     }
 
     .btn i {
-      font-size: 20px;
-      font-weight: 500;
+      font-size: 22px;
+      font-weight: 700;
     }
 
     /* Enhanced number transitions */
@@ -297,8 +301,16 @@
 
     /* Focus states for accessibility */
     .btn:focus-visible {
-      outline: 2px solid var(--accent-color);
+      outline: 3px solid var(--accent-color);
       outline-offset: 2px;
+    }
+
+    /* Hover effects for desktop */
+    @media (hover: hover) {
+      .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+      }
     }
 
     /* Responsive adjustments */
@@ -314,12 +326,12 @@
       }
       
       .btn {
-        font-size: 22px;
-        border-radius: 14px;
+        font-size: 24px;
+        border-radius: 16px;
       }
       
       .result {
-        font-size: clamp(48px, 12vw, 60px);
+        font-size: clamp(48px, 12vw, 64px);
       }
       
       .history {
@@ -344,12 +356,12 @@
       }
       
       .btn {
-        font-size: 20px;
-        border-radius: 12px;
+        font-size: 22px;
+        border-radius: 14px;
       }
       
       .result {
-        font-size: clamp(42px, 11vw, 52px);
+        font-size: clamp(42px, 11vw, 56px);
       }
       
       .history {
@@ -357,7 +369,7 @@
       }
       
       .app-title {
-        font-size: 20px;
+        font-size: 22px;
       }
     }
 
@@ -394,10 +406,11 @@
       animation: successPulse 0.6s ease;
     }
 
-    /* Icon fallback */
+    /* Icon fallback with better styling */
     .icon-fallback {
-      font-family: 'Inter', sans-serif;
-      font-weight: 500;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 800;
+      font-size: 20px;
     }
 
     /* Fix for long numbers */
@@ -414,11 +427,33 @@
       background: var(--accent-color) !important;
       color: var(--button-bg) !important;
     }
+
+    /* Preload icons */
+    .icon-preload {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
   </style>
+
+  <!-- Preload critical icons -->
+  <div class="icon-preload">
+    <i class="fas fa-undo-alt"></i>
+    <i class="fas fa-plus-minus"></i>
+    <i class="fas fa-percentage"></i>
+    <i class="fas fa-divide"></i>
+    <i class="fas fa-times"></i>
+    <i class="fas fa-minus"></i>
+    <i class="fas fa-plus"></i>
+    <i class="fas fa-backspace"></i>
+    <i class="fas fa-equals"></i>
+    <i class="fas fa-moon"></i>
+    <i class="fas fa-sun"></i>
+  </div>
 </head>
 <body>
   <div class="header">
-    <div class="app-title">Calculator</div>
+    <div class="app-title">CalcPlay</div>
     <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
       <i class="fas fa-moon"></i>
     </button>
@@ -484,48 +519,72 @@
   </div>
 
   <script>
-    // Check if Font Awesome loaded with better detection
+    // Enhanced icon loading detection
     function checkIconsLoaded() {
-      // Create test element to check if Font Awesome is working
-      const testIcon = document.createElement('i');
-      testIcon.className = 'fas fa-test';
-      document.body.appendChild(testIcon);
-      
-      setTimeout(() => {
-        const computedStyle = window.getComputedStyle(testIcon);
-        const fontFamily = computedStyle.fontFamily || '';
+      return new Promise((resolve) => {
+        const testIcon = document.createElement('i');
+        testIcon.className = 'fas fa-circle';
+        testIcon.style.position = 'absolute';
+        testIcon.style.left = '-100px';
+        document.body.appendChild(testIcon);
+
+        setTimeout(() => {
+          const computedStyle = window.getComputedStyle(testIcon);
+          const fontFamily = computedStyle.fontFamily || '';
+          const isLoaded = fontFamily.includes('Font Awesome');
+          
+          document.body.removeChild(testIcon);
+          resolve(isLoaded);
+        }, 100);
+      });
+    }
+
+    // Apply text fallbacks if icons don't load
+    function applyIconFallbacks() {
+      console.log('Applying icon fallbacks...');
+      document.querySelectorAll('.btn i').forEach(icon => {
+        const parent = icon.parentElement;
+        const action = parent.getAttribute('data-action') || '';
+        const number = parent.getAttribute('data-number');
         
-        if (!fontFamily.includes('Font Awesome')) {
-          console.warn('Font Awesome not loaded properly, using text fallbacks');
-          document.querySelectorAll('.btn i').forEach(icon => {
-            const parent = icon.parentElement;
-            const action = parent.getAttribute('data-action') || '';
-            const number = parent.getAttribute('data-number');
-            
-            if (number) return; // Keep numbers as they are
-            
-            let text = '';
-            switch(action) {
-              case 'clear': text = 'C'; break;
-              case 'toggleSign': text = '+/-'; break;
-              case 'percent': text = '%'; break;
-              case 'divide': text = '÷'; break;
-              case 'multiply': text = '×'; break;
-              case 'subtract': text = '−'; break;
-              case 'add': text = '+'; break;
-              case 'backspace': text = '⌫'; break;
-              case 'calculate': text = '='; break;
-              case 'decimal': text = '.'; break;
-            }
-            
-            if (text) {
-              parent.innerHTML = `<span class="icon-fallback">${text}</span>`;
-            }
-          });
+        if (number) return; // Keep numbers as they are
+        
+        let text = '';
+        switch(action) {
+          case 'clear': text = 'C'; break;
+          case 'toggleSign': text = '+/-'; break;
+          case 'percent': text = '%'; break;
+          case 'divide': text = '÷'; break;
+          case 'multiply': text = '×'; break;
+          case 'subtract': text = '−'; break;
+          case 'add': text = '+'; break;
+          case 'backspace': text = '⌫'; break;
+          case 'calculate': text = '='; break;
+          case 'decimal': text = '.'; break;
         }
         
-        document.body.removeChild(testIcon);
-      }, 100);
+        if (text) {
+          parent.innerHTML = `<span class="icon-fallback">${text}</span>`;
+        }
+      });
+
+      // Also update theme toggle
+      const themeToggle = document.getElementById('themeToggle');
+      if (themeToggle) {
+        themeToggle.innerHTML = isDarkMode ? '☀️' : '🌙';
+      }
+    }
+
+    // Initialize icons
+    async function initializeIcons() {
+      const iconsLoaded = await checkIconsLoaded();
+      
+      if (!iconsLoaded) {
+        console.warn('Font Awesome icons not detected, applying fallbacks...');
+        applyIconFallbacks();
+      } else {
+        console.log('Font Awesome icons loaded successfully!');
+      }
     }
 
     // Calculator state
@@ -814,9 +873,15 @@
     themeToggle.addEventListener('click', () => {
       isDarkMode = !isDarkMode;
       document.body.setAttribute('data-theme', isDarkMode ? 'dark' : '');
-      themeToggle.innerHTML = isDarkMode 
-        ? '<i class="fas fa-sun"></i>' 
-        : '<i class="fas fa-moon"></i>';
+      
+      // Update theme toggle icon
+      if (document.fonts.check('1em "Font Awesome 6 Free"') || document.fonts.check('1em "Font Awesome 6 Pro"')) {
+        themeToggle.innerHTML = isDarkMode 
+          ? '<i class="fas fa-sun"></i>' 
+          : '<i class="fas fa-moon"></i>';
+      } else {
+        themeToggle.innerHTML = isDarkMode ? '☀️' : '🌙';
+      }
       
       localStorage.setItem('calculator-theme', isDarkMode ? 'dark' : 'light');
     });
@@ -827,7 +892,11 @@
       if (savedTheme === 'dark') {
         isDarkMode = true;
         document.body.setAttribute('data-theme', 'dark');
-        themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        if (document.fonts.check('1em "Font Awesome 6 Free"') || document.fonts.check('1em "Font Awesome 6 Pro"')) {
+          themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+        } else {
+          themeToggle.innerHTML = '☀️';
+        }
       }
     }
 
@@ -917,12 +986,15 @@
       }
     });
 
-    // Initialize
-    loadTheme();
-    updateDisplay();
-    
-    // Check icons after a short delay to ensure everything is loaded
-    setTimeout(checkIconsLoaded, 500);
+    // Initialize everything
+    async function initializeApp() {
+      loadTheme();
+      updateDisplay();
+      await initializeIcons();
+    }
+
+    // Start the app
+    initializeApp();
 
     // Prevent zoom on double tap
     document.addEventListener('touchstart', function(e) {
